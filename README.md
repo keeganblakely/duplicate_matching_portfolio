@@ -103,7 +103,7 @@ This project builds an end-to-end pipeline to identify and score potential dupli
 
 ---
 
-## ▶️ How to Run
+## How to Run
 1. Import the provided SQL dump to create and populate the database
 2. Update MySQL connection settings in the Jupyter notebook
 3. (Optional) Adjust scoring weights and thresholds
