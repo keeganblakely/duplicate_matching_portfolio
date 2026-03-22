@@ -1,0 +1,1 @@
+Contains the MySQL database dump for the Duplicate Record Matching project.

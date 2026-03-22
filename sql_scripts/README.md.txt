@@ -1,0 +1,1 @@
+Contains SQL scripts for creating schema, inserting data, and staging data for analysis.
