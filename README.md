@@ -1,60 +1,112 @@
 # Duplicate Record Matching Portfolio Project
 
 **Author:** Keegan Blakely  
-**Date:** 2026-03-19
+**Date:** 2026-03-22  
 
 ---
 
-## Project Overview
-This project demonstrates an end-to-end approach to identifying potential duplicate student records in a database. It includes database design, data preparation, data pipeline, duplicate scoring, and visualization.
+## 🔍 Problem
+Organizations often store duplicate records due to inconsistent data entry (e.g., casing differences, formatting issues, missing values).  
+This leads to inaccurate reporting, operational inefficiencies, and poor data quality.
 
 ---
 
-## Database Design
-- Designed a relational student database from scratch using an ER diagram.
-- Forward-engineered in MySQL and added constraints to the schema script.
-- Includes 11 tables such as students, emails, courses, enrolments, etc.
-- Populated with synthetic data for testing, including messy data and duplicate records.
-- Supports staging for potential duplicates and provides the foundation for scoring logic.
+## 💡 Solution
+This project builds an end-to-end pipeline to identify and score potential duplicate student records using:
+- SQL-based data standardization
+- Python-based matching and scoring logic
+- Visualization of match results
+
+[Jump to How to Run ▶️](#how-to-run)
 
 ---
 
-## Pipeline & Analysis
-- SQL pipeline to stage and standardize messy data for Python analysis.
-- Extracts staged student data from the database.
-- Generates candidate pairs grouped by alternate IDs.
-- Calculates match scores using:
-  - First and last names (including preferred names)
+## 🧠 Key Features
+- End-to-end workflow: **database → staging → matching → visualization**
+- Handles **messy, real-world data** (inconsistent casing, formatting, duplicates)
+- Weighted scoring system across multiple attributes
+- Fuzzy matching for names and addresses
+- Gender mismatch penalty for improved accuracy
+- Parent record selection based on enrolment history
+
+---
+
+## 🗄️ Database Design
+- Designed a relational student database from scratch using an ER diagram
+- Implemented in MySQL with constraints and normalized structure
+
+<br>
+
+<p align="center">
+  <img src="er_diagram/portfolio_er_diagram.png" width="600"/>
+</p>
+
+<br>
+
+- Includes 11 tables (students, emails, phones, enrolments, etc.)
+- Populated with synthetic data, including:
+  - Intentional duplicates
+  - False positives
+  - Inconsistent formatting
+
+---
+
+## ⚙️ Pipeline & Matching Logic
+- SQL staging layer standardizes raw data (names, addresses, emails, phone numbers)
+- Candidate pairs generated using shared alternate IDs
+- Match scoring based on:
+  - Names (including preferred names, fuzzy matching)
   - Birth dates
-  - Address (lines, city, state, zip, country)
-  - Emails
-  - Phone numbers
-  - Gender identity mismatch penalties
-- Produces a weighted composite score for each pair.
-- Categorizes each pair as **Very Likely**, **Likely**, **Possible**, or **Not Likely** match.
-- Determines a “parent record” based on enrolment count and first enrolment date.
+  - Address components (line, city, state, zip, country)
+  - Emails and phone numbers
+  - Gender identity (penalty applied for mismatch)
+
+### Composite Scoring
+- Weighted scoring model combining all attributes
+- Final classification:
+  - **Very Likely Match**
+  - **Likely Match**
+  - **Possible Match**
+  - **Not Likely Match**
+
+### Parent Record Selection
+- Record with higher enrolment count is selected
+- Tie-breaker: earliest enrolment date
 
 ---
 
-## Visualization
-Includes a simple dashboard with:
-- Summary tiles for total matches and breakdown by match likelihood.
-- Horizontal bar chart showing counts per match likelihood.
-- Conditional formatting to highlight match likelihood in the final output table.
+## 📊 Results & Visualization
+- Identifies and ranks potential duplicate record pairs  
+- Outputs a final scored dataset with match likelihood categories  
+
+<br>
+
+<p align="center">
+  <img src="dashboards/duplicate_matching_dashboard.png" width="800"/>
+</p>
+
+<br>
+
+- Includes a Power BI dashboard with:
+  - Match distribution by likelihood
+  - Summary metrics
+  - Highlighted final output table
 
 ---
 
-## Tools & Technologies
-- **MySQL** – database design, ER diagram, data insertion, staging pipeline  
-- **Python** – data extraction, cleaning, scoring  
-- **Pandas** – data manipulation  
-- **FuzzyWuzzy** – text similarity scoring  
-- **Power BI** – dashboard visualization  
+## 🛠️ Tools & Technologies
+- **MySQL** – database design, data pipeline, staging
+- **Python** – data extraction and scoring logic
+- **Pandas** – data manipulation
+- **FuzzyWuzzy** – string similarity matching
+- **Power BI** – visualization and dashboarding
 
 ---
 
 ## How to Run
-1. Clone the repository using the provided SQL dump.
-2. Update the MySQL connection parameters in the Jupyter notebook.
-3. Optional: adjust parameters (scoring weights and thresholds).
-4. Run the notebook to extract data, calculate match scores, and produce the final output table.
+1. Import the provided SQL dump to create and populate the database
+2. Update MySQL connection settings in the Jupyter notebook
+3. (Optional) Adjust scoring weights and thresholds
+4. Run the notebook to generate match scores and final output
+
+---
