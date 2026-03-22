@@ -17,7 +17,7 @@ This project builds an end-to-end pipeline to identify and score potential dupli
 - Python-based matching and scoring logic
 - Visualization of match results
 
-[Jump to How to Run ▶️](#-how-to-run)
+[Jump to How to Run ▶️](#how-to-run)
 
 ---
 
